@@ -6,5 +6,9 @@ export const routes = [
     {
         name: 'questions',
         pattern: '/questions'
+    },
+    {
+        name: 'admin',
+        pattern: '/admin'
     }
 ]
