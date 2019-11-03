@@ -12,14 +12,14 @@ export const routes = [
     {
         name: 'admin',
         pattern: '/admin',
-        // beforeEnter: (from, to, routerStore) => {
-        //     let password = prompt("Enter password");
+        beforeEnter: (from, to, routerStore) => {
+            let password = prompt("Enter password");
 
-        //     if (password !== "xyc") {
-        //         return Promise.reject(new RouterState('home'));
-        //     }
+            if (password !== "xyc") {
+                return Promise.reject(new RouterState('home'));
+            }
 
-        //     return Promise.resolve();
-        // }
+            return Promise.resolve();
+        }
     }
 ]
