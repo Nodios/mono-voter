@@ -47,9 +47,9 @@ const styles = theme => ({
 @observer
 class Question extends React.Component {
     componentDidMount() {
-        const { step, viewStore } = this.props;
+        const { step, viewStore, userId } = this.props;
 
-        viewStore.init(step);
+        viewStore.init(step, userId);
     }
 
     componentDidUpdate(prevProps) {
