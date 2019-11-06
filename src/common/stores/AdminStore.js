@@ -123,7 +123,7 @@ class AdminStore {
         // set new data
         await newItemRef.set({
             question: questionObj.question,
-            sortOrder: questionObj.sortOrder,
+            sortOrder: +questionObj.sortOrder,
             votes: {}
         })
     }
