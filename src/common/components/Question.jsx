@@ -47,18 +47,18 @@ const styles = theme => ({
 @observer
 class Question extends React.Component {
     componentDidMount() {
-        const { step, viewStore } = this.props;
+        const { step, viewStore, userId } = this.props;
 
-        viewStore.init(step);
+        viewStore.init(step, userId);
     }
 
     componentDidUpdate(prevProps) {
-        const { step, viewStore } = this.props;
+        const { step, viewStore, userId } = this.props;
 
         // re-init only on new step
         if (prevProps.step !== step) {
             viewStore.dispose();
-            viewStore.init(step);
+            viewStore.init(step, userId);
         }
     }
 

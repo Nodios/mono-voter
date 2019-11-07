@@ -5,13 +5,13 @@ import { RouterView } from 'mobx-state-router';
 import { AppBar, Toolbar, Typography, withStyles, Link, Container, Grid } from '@material-ui/core';
 
 import { appStyles } from './App.styles';
-import { defaultTemplate } from './common/hoc';
 
-import { WelcomePage, QuestionsPage } from './pages';
+import { WelcomePage, QuestionsPage, AdminPage } from './pages';
 
 const viewMap = {
   home: <WelcomePage />,
   questions: <QuestionsPage />,
+  admin: <AdminPage />
 };
 
 @inject(i => ({

@@ -11,6 +11,9 @@ import { Question } from '../common/components';
 })
 @observer
 class QuestionsPage extends React.Component {
+    async componentDidMount() {
+        await this.props.viewStore.init();
+    }
     render() {
         const { step, isAuthenticated, userId } = this.props.viewStore;
 

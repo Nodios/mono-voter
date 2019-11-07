@@ -15,12 +15,13 @@ class QuestionStore {
     @observable answer;
 
     @computed get votesCount() {
+        let output = {
+            total: 0,
+            yes: 0,
+            no: 0
+        };
         if (!this.question) {
-            return {
-                total: 0,
-                yes: 0,
-                no: 0
-            }
+            return output;
         }
         return Object.keys(this.question.votes).reduce((acc, uid) => {
             const vote = this.question.votes[uid];
@@ -34,11 +35,7 @@ class QuestionStore {
             }
 
             return acc;
-        }, {
-            total: 0,
-            yes: 0,
-            no: 0
-        });
+        }, output);
     }
 
     _dbUnsubscriber;
@@ -46,14 +43,6 @@ class QuestionStore {
 
     @action.bound
     castVote = (vote, userId) => {
-        // TODO: check if voted
-        // if (vote === 'yes') {
-        //     this._submitVote('yes');
-        // }
-        // else if (vote === 'no') {
-        //     this._submitVote('no');
-        // }
-
         if (this.answer !== vote) {
             Firebase.firestore().runTransaction((transaction) => {
                 return transaction.get(this.questionRef).then(doc => {
@@ -71,8 +60,9 @@ class QuestionStore {
     }
 
     @action.bound
-    init(step) {
+    init(step, userId) {
         this.step = step;
+        this.userId = userId;
 
         this.answer = localStorage.getItem(this.step);
 
@@ -85,6 +75,11 @@ class QuestionStore {
 
                     const question = snapshot.docs[0].data()
                     this.question = question;
+
+                    if (!question.votes[userId]) {
+                        this.resetAnswer();
+                    }
+
                     this.questionState = QuestionState.DISPLAY;
                 }
                 else {
@@ -101,6 +96,12 @@ class QuestionStore {
             this._dbUnsubscriber = null;
             console.log("disposed");
         }
+    }
+
+    @action.bound
+    resetAnswer() {
+        this.answer = null;
+        localStorage.removeItem(this.step);
     }
 }
 
